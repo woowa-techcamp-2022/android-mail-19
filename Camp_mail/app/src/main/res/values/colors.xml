@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="textInputBoxStroke">#FFBB86FC</color>
+    <color name = "textInputHintTextColor">#FFBB86FC</color>
+    <color name = "textInputTextColor">#000000</color>
+    <color name="textInputTextColorHint">#666666</color>
     <color name="purple_200">#FFBB86FC</color>
+    <color name = "nextButtonColor">#BB86FC</color>
+    <color name="toolbarTitleColor">#000000</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
@@ -8,5 +14,4 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#CC0000</color>
-    <color name="btnNotClickable">#CCCCCC</color>
 </resources>

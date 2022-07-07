@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Camp_mail" parent="Theme.MaterialComponents.Light">
+    <style name="Theme.Camp_mail" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+    <style name="Widget.App.NavigationRailView" parent="Widget.MaterialComponents.NavigationRailView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.NavigationRailView</item>
+    </style>
+    <style name="ThemeOverlay.App.NavigationRailView" parent="">
+        <item name="colorPrimary">@color/white</item>
     </style>
 </resources>
