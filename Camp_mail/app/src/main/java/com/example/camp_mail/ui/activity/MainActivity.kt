@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         }
 
     }
-
     private fun initBottomNavigation() {
         binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
