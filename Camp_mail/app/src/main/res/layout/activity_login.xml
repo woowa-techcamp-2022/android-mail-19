@@ -32,7 +32,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/textInputTextColorHint"
-            app:boxBackgroundColor="@color/white"
             app:boxStrokeColor="@color/textInputBoxStroke"
             app:errorEnabled="true"
             app:hintTextColor="@color/textInputHintTextColor"
@@ -44,6 +43,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:background="@drawable/frame_border"
                 android:layout_height="wrap_content"
                 android:hint="닉네임"
                 android:textColorHint="@color/textInputTextColorHint"
@@ -60,7 +60,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/textInputTextColorHint"
-            app:boxBackgroundColor="@color/white"
             app:boxStrokeColor="@color/textInputBoxStroke"
             app:errorEnabled="true"
             app:hintTextColor="@color/textInputHintTextColor"
@@ -72,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:textColor="@color/textInputTextColor"
                 android:layout_height="wrap_content"
+                android:background="@drawable/frame_border"
                 android:hint="이메일"
                 android:text="@{userInfo.userEmail}" />
         </com.google.android.material.textfield.TextInputLayout>

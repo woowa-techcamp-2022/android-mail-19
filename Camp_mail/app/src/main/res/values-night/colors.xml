@@ -3,7 +3,7 @@
     <color name="textInputBoxStroke">#FFFFFF</color>
     <color name="textInputTextColorHint">#666666</color>
     <color name="textInputHintTextColor">#FFFFFF</color>
-    <color name="textInputTextColor">#000000</color>
+    <color name="textInputTextColor">#FFFFFF</color>
     <color name="nextButtonColor">#FFFFFF</color>
     <color name="purple_200">#BB86FC</color>
     <color name="purple_700">#3700B3</color>
