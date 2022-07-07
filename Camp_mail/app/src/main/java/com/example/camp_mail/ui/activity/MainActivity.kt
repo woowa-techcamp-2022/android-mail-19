@@ -1,6 +1,7 @@
 package com.example.camp_mail.ui.activity
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -16,47 +17,86 @@ import com.example.camp_mail.ui.fragments.MailFragment
 import com.example.camp_mail.ui.fragments.SettingFragment
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var currentSelectedView = "MAIL"
     private lateinit var binding: ActivityMainBinding
     private lateinit var fmManager: FragmentManager
     private val userInfoViewModel: UserInfoViewModel by viewModels()
     private val mailViewModel: MailViewModel by viewModels()
+    private var widthdpi : Float = 0.0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu) // 홈버튼 이미지 변경
-        // 네비게이션 드로어 생성
-
-        // 네비게이션 드로어 내에있는 화면의 이벤트를 처리하기 위해 생성
-        binding.navView.setNavigationItemSelectedListener(this)
-        setFrag("MAIL") // default 화면
-        initBottomNavigation()
-
 
         apply {
             userInfoViewModel.setUserNickName(intent.getStringExtra("userNickName").toString())
             userInfoViewModel.setUserEmail(intent.getStringExtra("userEmail").toString())
         }
 
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+
+        checkDisplaySize()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu) // 홈버튼 이미지 변경
+        // 네비게이션 드로어 생성
+
+        binding.navView.setNavigationItemSelectedListener(this)
+
+        // 네비게이션 드로어 내에있는 화면의 이벤트를 처리하기 위해 생성
+        setFrag("MAIL") // default 화면
+
     }
-    private fun initBottomNavigation() {
-        binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
+
+    private fun checkDisplaySize() {
+        val display = windowManager.defaultDisplay
+        val outMetrics = DisplayMetrics()
+        display.getMetrics(outMetrics)
+        val density = resources.displayMetrics.density
+        widthdpi = outMetrics.widthPixels / density
+        Log.d("widthhdpi ", widthdpi.toString())
+        if(widthdpi >=600 ){
+            initNavRail()
+        }
+        else{
+            initBottomNavigation()
+        }
+    }
+
+    private fun initNavRail() {
+        binding.navRail!!.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottomNav_showMail -> {
-                    Log.d("botton Nav ", "mail selected")
+                    Log.d("rail Nav ", "mail selected")
                     currentSelectedView = "MAIL"
                     setFrag("MAIL")
                     true
                 }
                 R.id.bottomNav_showSetting -> {
-                    Log.d("botton Nav ", "setting selected")
+                    Log.d("rail Nav ", "setting selected")
+                    currentSelectedView = "SETTING"
+                    setFrag("SETTING")
+                    true
+                }
+                else -> true
+            }
+        }
+    }
+
+    private fun initBottomNavigation() {
+        binding.bottomNavBar!!.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bottomNav_showMail -> {
+                    Log.d("bottom Nav ", "mail selected")
+                    currentSelectedView = "MAIL"
+                    setFrag("MAIL")
+                    true
+                }
+                R.id.bottomNav_showSetting -> {
+                    Log.d("bottom Nav ", "setting selected")
                     currentSelectedView = "SETTING"
                     setFrag("SETTING")
                     true
@@ -85,6 +125,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        Log.d("onNavigationItected", "clicked")
         when (item.itemId) {
             R.id.menu_primary -> {
                 if (mailViewModel.curState != "Primary") {
@@ -123,7 +164,12 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         if (currentSelectedView == "SETTING") {
             setFrag("MAIL")
             mailViewModel.curState = "Primary"
-            binding.bottomNavBar.selectedItemId = R.id.bottomNav_showMail
+            if(widthdpi >= 600){
+                binding.navRail!!.selectedItemId = R.id.bottomNav_showMail
+            }
+            else{
+                binding.bottomNavBar!!.selectedItemId = R.id.bottomNav_showMail
+            }
         } else if (currentSelectedView == "MAIL" && mailViewModel.curState != "Primary") {
             mailViewModel.changeMailListSet("Primary")
         }
