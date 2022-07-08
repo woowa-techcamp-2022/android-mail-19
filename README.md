@@ -30,8 +30,8 @@
 -> Mail탭 선택시, default 메일 리스트를 보여주도록 구현
 - 메일 타입은 Primary, Social, Promotions 3가지 이다.
 - Navigation Drawer 메뉴에 메뉴 타입을 추가하고, 클릭시 각 타입에 맞는 데이터를 출력 </br>
--> 화면이 회전되어도, 메일 리스트가 유지되어야 하므로 MailViewModel 선언 
--> MailViewModel 에 현재 메일 타입과, 리스트를 저장한다.
+-> 화면이 회전되어도, 메일 리스트가 유지되어야 하므로 MailViewModel 선언 </br>
+-> MailViewModel 에 현재 메일 타입과, 리스트를 저장한다.</br>
 -> RecyclerView에서 메일 타입과 리스트를 observing 하여 각 타입에 맞게 뷰를 업데이트 시키도록 한다. 
 - 수신한 메일목록은 발신인, 제목, 본문, 발신일 정보를 갖는다 </br>
 -> 적절한 data class 선언, 더미데이터 생성
