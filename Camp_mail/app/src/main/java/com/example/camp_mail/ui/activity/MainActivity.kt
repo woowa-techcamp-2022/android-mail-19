@@ -37,27 +37,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-
-        checkDisplaySize()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu) // 홈버튼 이미지 변경
         // 네비게이션 드로어 생성
+
+
+        checkDisplaySize() // 현재 display 사이즈를 확인하고, bottomNavi 혹은, naviRail 을 init
+
 
         binding.navView.setNavigationItemSelectedListener(this)
 
         // 네비게이션 드로어 내에있는 화면의 이벤트를 처리하기 위해 생성
 
-        if(savedInstanceState != null){
+        if(savedInstanceState != null){ // 화면이 회전된 경우, 현재 보고있는 tab 을 저장하고 불러옴
             currentSelectedView = savedInstanceState.getString("currentSelectedView").toString()
         }
         else{
             currentSelectedView = "MAIL"
         }
 
-        checkNavigationFocused()
+        checkNavigationFocused() // 화면이 회전된 경우, navigation 탭의 focues가 변경되는 것을 방지
+
         setFrag(currentSelectedView) // default 화면
-        Log.d("cur screen 2", currentSelectedView)
 
     }
 

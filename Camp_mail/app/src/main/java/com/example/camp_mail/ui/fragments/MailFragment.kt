@@ -32,7 +32,7 @@ class MailFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         initMailListRecyclerView()
-        setObservingMailList()
+        setObservingMailList() // MailListViewModel 의 메일리스트를 관찰하여 리사이클러뷰 갱신
     }
 
     private fun setObservingMailList() {

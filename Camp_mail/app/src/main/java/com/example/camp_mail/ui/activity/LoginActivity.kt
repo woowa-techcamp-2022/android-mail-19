@@ -10,9 +10,14 @@ import com.example.camp_mail.model.UserInfoViewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
+
+
+    private val userInfoViewModel : UserInfoViewModel by viewModels() // 입력 정보 저장할 viewModel
+
+    // 입력된 닉네임, 이메일 타당성 저장할 변수
     private var isValidateNickName = false
     private var isValidateEmail = false
-    private val userInfoViewModel : UserInfoViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         initGoNextButton()
     }
 
+    // Next 버튼
     private fun initGoNextButton() {
         binding.btnGoNext.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -52,6 +58,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+    // 닉네임 타당성 검증
     private fun isValidateNickName(text: String): Boolean {
         if(text.isEmpty()) return true
         return text.length in 4..12 && Regex("^[a-zA-Z0-9]*\$").matches(text)
@@ -74,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // 이메일 타당성 검증
     private fun isValidateEmail(text: String): Boolean {
         if(text.isEmpty()) return true
         return Regex("[0-9|a-z]+@woowahan.com").matches(text)
