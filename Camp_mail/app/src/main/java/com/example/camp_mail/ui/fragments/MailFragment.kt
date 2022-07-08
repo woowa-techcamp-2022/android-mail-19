@@ -1,7 +1,6 @@
 package com.example.camp_mail.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,6 @@ class MailFragment : Fragment() {
 
     private fun setObservingMailList() {
         mailViewModel.mailList.observe(viewLifecycleOwner) { mailList ->
-            Log.d("qwf", "qwfqwf")
             if (mailList.isNotEmpty()) {
                 adapter.setData(mailList)
             }

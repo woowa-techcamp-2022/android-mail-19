@@ -18,7 +18,7 @@ import com.example.camp_mail.ui.fragments.SettingFragment
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private var currentSelectedView = "MAIL"
+    private var currentSelectedView = ""
     private lateinit var binding: ActivityMainBinding
     private lateinit var fmManager: FragmentManager
     private val userInfoViewModel: UserInfoViewModel by viewModels()
@@ -47,7 +47,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.navView.setNavigationItemSelectedListener(this)
 
         // 네비게이션 드로어 내에있는 화면의 이벤트를 처리하기 위해 생성
-        setFrag("MAIL") // default 화면
+
+        if(savedInstanceState != null){
+            currentSelectedView = savedInstanceState.getString("currentSelectedView").toString()
+        }
+        else{
+            currentSelectedView = "MAIL"
+        }
+
+        checkNavigationFocused()
+        setFrag(currentSelectedView) // default 화면
+        Log.d("cur screen 2", currentSelectedView)
 
     }
 
@@ -65,19 +75,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             initBottomNavigation()
         }
     }
+    private fun checkNavigationFocused(){
+        Log.d("cur state", currentSelectedView)
+        if(widthdpi < 600 ){
+            if(currentSelectedView == "MAIL"){
+                binding.bottomNavBar!!.selectedItemId = R.id.bottomNav_showMail
+            }
+            else{
+                binding.bottomNavBar!!.selectedItemId = R.id.bottomNav_showSetting
+            }
+        }
+        else{
+            if(currentSelectedView == "MAIL"){
+                binding.navRail!!.selectedItemId = R.id.bottomNav_showMail
+            }
+            else{
+                binding.navRail!!.selectedItemId = R.id.bottomNav_showSetting
+            }
+        }
+    }
 
     private fun initNavRail() {
         binding.navRail!!.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottomNav_showMail -> {
                     Log.d("rail Nav ", "mail selected")
-                    currentSelectedView = "MAIL"
                     setFrag("MAIL")
                     true
                 }
                 R.id.bottomNav_showSetting -> {
                     Log.d("rail Nav ", "setting selected")
-                    currentSelectedView = "SETTING"
                     setFrag("SETTING")
                     true
                 }
@@ -91,13 +118,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (item.itemId) {
                 R.id.bottomNav_showMail -> {
                     Log.d("bottom Nav ", "mail selected")
-                    currentSelectedView = "MAIL"
                     setFrag("MAIL")
                     true
                 }
                 R.id.bottomNav_showSetting -> {
                     Log.d("bottom Nav ", "setting selected")
-                    currentSelectedView = "SETTING"
                     setFrag("SETTING")
                     true
                 }
@@ -114,9 +139,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.replace(binding.hostFrag.id, MailFragment())
                 mailViewModel.changeMailListSet(mailViewModel.curState)
 
+                currentSelectedView = "MAIL"
+
             }
             "SETTING" -> {
                 transaction.replace(binding.hostFrag.id, SettingFragment())
+                currentSelectedView = "SETTING"
             }
 
         }
@@ -158,6 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+        Log.d("cur scrren", currentSelectedView)
         if (currentSelectedView == "MAIL" && mailViewModel.curState == "Primary") {
             ActivityCompat.finishAffinity(this) //해당 앱의 루트 액티비티를 종료시킨다. (API  16미만은 ActivityCompat.finishAffinity())
         }
@@ -176,4 +205,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("currentSelectedView",currentSelectedView)
+    }
 }
